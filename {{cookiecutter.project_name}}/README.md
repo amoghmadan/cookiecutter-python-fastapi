@@ -39,19 +39,19 @@ python -m {{cookiecutter.package_name}} runserver
 Place JSON fixture files in a `fixtures/` directory at the project root, then run:
 
 ```bash
-{{cookiecutter.package_name}} loaddata --files <file>.json
+python -m {{cookiecutter.package_name}} loaddata --files <file>.json
 ```
 
 ## How to run Python REPL?
 
 ```bash
-{{cookiecutter.package_name}} shell
+python -m {{cookiecutter.package_name}} shell
 ```
 
 Inline commands are also supported:
 
 ```bash
-{{cookiecutter.package_name}} shell --command "from {{cookiecutter.package_name}}.db import session; print(session)"
+python -m {{cookiecutter.package_name}} shell --command "from {{cookiecutter.package_name}}.db import session; print(session)"
 ```
 
 ## Quality checks

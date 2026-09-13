@@ -32,13 +32,13 @@ Use this template to create a FastAPI Python project.
 
 - Run the server.
   ```bash
-  {{package_name}} runserver
+  python -m {{package_name}} runserver
   ```
 - Load JSON data (fixtures) into your models.
   ```bash
-  {{package_name}} loaddata <file>.json
+  python -m {{package_name}} loaddata <file>.json
   ```
 - Run the python shell (with application context).
   ```bash
-  {{package_name}} shell
+  python -m {{package_name}} shell
   ```

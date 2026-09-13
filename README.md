@@ -6,7 +6,7 @@ Use this template to create a FastAPI Python project.
 
 - Set-up base.
   ```bash
-  cookiecutter https://github.com/amoghmadan/cookiecutter-python-fastapi.git
+  uvx cookiecutter https://github.com/amoghmadan/cookiecutter-python-fastapi.git
   ```
 - Follow the prompts to customize your project.
   ```

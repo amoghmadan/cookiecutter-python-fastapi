@@ -1,19 +1,34 @@
-../.idea/
-.tox/
-*.egg-info/
+# Secrets — never leak into image layers
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+venv/
 __pycache__/
+*.py[cdoz]
+*.egg-info/
 build/
 dist/
-docs/
-htmlcov/
-test/
-venv/
 
-*.py[cdo]
+# Tests & tooling
+test/
+.DS_Store
 .coverage
+coverage.xml
+htmlcov/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.tox/
+
+# Runtime data
+logs/
+db.sqlite3
+db.sqlite3-journal
+local_settings.py
+
+# Container orchestration (excluded so only project source enters the build)
 Dockerfile
-Makefile
-celerybeat-schedule.db
-local-compose.yaml
-nginx.conf
-tox.ini
+docker-compose.yaml

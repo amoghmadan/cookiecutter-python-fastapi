@@ -1,5 +1,6 @@
 {
     "project_name": "app",
+    "package_name": "app",
     "project_description": "Example application",
     "author_name": "Your Name",
     "author_email": "your@email.com"

@@ -10,10 +10,11 @@ Use this template to create a FastAPI Python project.
   ```
 - Follow the prompts to customize your project.
   ```
-  [1/4] project_name (app): play
-  [2/4] project_description (Example application): Play with cookie cutter.
-  [3/4] author_name (Your Name): Your Name
-  [4/4] author_email (your@email.com): your@email.com
+  [1/5] package_name (app): play
+  [2/5] package_name (app): play
+  [3/5] project_description (Example application): Play with cookie cutter.
+  [4/5] author_name (Your Name): Your Name
+  [5/5] author_email (your@email.com): your@email.com
   ```
 
 ## Set-up?
@@ -22,30 +23,22 @@ Use this template to create a FastAPI Python project.
   ```bash
   git init -b main
   ```
-- Create a virtual environment.
+- Install the dependencies.
   ```bash
-  python3.13 -m venv .venv
-  ```
-- Activate the virtual environment.
-    ```bash
-    source .venv/bin/activate
-    ```
-- Install the dependencies (you can select database from mysql, postgres, sqlite).
-  ```bash
-  pip install -e '.[automation,test]'
+  uv sync
   ```
 
 ## How to run?
 
 - Run the server.
   ```bash
-  {{project_name}} runserver
+  {{package_name}} runserver
   ```
 - Load JSON data (fixtures) into your models.
   ```bash
-  {{project_name}} loaddata <file>.json
+  {{package_name}} loaddata <file>.json
   ```
 - Run the python shell (with application context).
   ```bash
-  {{project_name}} shell
+  {{package_name}} shell
   ```

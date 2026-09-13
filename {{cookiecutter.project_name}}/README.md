@@ -1,56 +1,105 @@
-# {{cookiecutter.project_name}}
+# {{cookiecutter.package_name}}
 
-{{cookiecutter.project_name}} API
+{{cookiecutter.package_name}} API
 
-## Setup Virtual Environment
+## Prerequisites
 
-- How to set up?
-  ```bash
-  python3.13 -m venv .venv
-  ```
+- Python 3.14
+- [uv](https://docs.astral.sh/uv/)
 
-## How to set up?
+## Setup
 
-- How to install dependencies?
-  ```bash
-  pip install -e '.[automation,test]'
-  ```
+```bash
+cp .env.example .env
+uv sync --dev
+```
 
 ## How to run a development server?
 
-- Run the development server.
-  ```bash
-  {{cookiecutter.project_name}} runserver
-  ```
+```bash
+{{cookiecutter.package_name}} runserver
+```
 
 ## Migrations
 
 - Make migration files
+
   ```bash
-  alembic revision --autogenerate -m "Your message here"
+  uv run alembic revision --autogenerate -m "Your message here"
   ```
+
 - Migrate
+
   ```bash
-  alembic upgrade head
+  uv run alembic upgrade head
   ```
-  
+
 ## How to load fixtures?
 
-- Use the following command to load fixtures from a JSON file.
-  ```bash
-  {{cookiecutter.project_name}} loaddata <file>.json
-  ```
-  
+Place JSON fixture files in a `fixtures/` directory at the project root, then run:
+
+```bash
+{{cookiecutter.package_name}} loaddata --files <file>.json
+```
+
 ## How to run Python REPL?
 
-- Use the following command to run the Python Shell with context.
+```bash
+{{cookiecutter.package_name}} shell
+```
+
+Inline commands are also supported:
+
+```bash
+{{cookiecutter.package_name}} shell --command "from {{cookiecutter.package_name}}.db import session; print(session)"
+```
+
+## Quality checks
+
+- Format code with Ruff
+
   ```bash
-  {{cookiecutter.project_name}} shell
+  uv run ruff format .
+  ```
+
+- Lint code with Ruff
+
+  ```bash
+  uv run ruff check .
+  ```
+
+- Type check with ty
+
+  ```bash
+  uv run ty check
+  ```
+
+- Scan for security vulnerabilities with Bandit
+
+  ```bash
+  uv run bandit -c pyproject.toml -r src
+  ```
+
+- Run tests
+
+  ```bash
+  uv run pytest
+  ```
+
+- Run tests with coverage report
+
+  ```bash
+  uv run pytest --cov={{cookiecutter.package_name}}
   ```
 
 ## How to build an image for deployment?
 
-- Use the following command to build deployable image.
-  ```bash
-  docker build -t {{cookiecutter.project_name}}:$(python -c "from {{cookiecutter.project_name}} import __version__;print(__version__)") .
-  ```
+```bash
+docker build -t {{cookiecutter.package_name}}:$(uv run python -c "from {{cookiecutter.package_name}} import __version__; print(__version__)") .
+```
+
+Run with Docker Compose:
+
+```bash
+TAG=latest docker compose up
+```

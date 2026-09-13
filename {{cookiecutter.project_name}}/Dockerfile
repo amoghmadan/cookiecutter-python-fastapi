@@ -1,28 +1,59 @@
-# Use Python 3.13 Slim Trixie as base image
-FROM python:3.13-slim-trixie
+FROM python:3.14-slim-trixie AS builder
 
-# Set username, home path and venv path
-ARG USERNAME={{cookiecutter.project_name}}
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+# setuptools_scm reads git tags to derive the version
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y git \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /build
+
+# Copy the full project (minus .dockerignore) so the version can be derived
+COPY . .
+
+# Build the venv at the same absolute path the runtime stage will use,
+# so script shebangs (e.g. /home/{{cookiecutter.package_name}}/.venv/bin/python) stay valid.
+ARG HOME=/home/{{cookiecutter.package_name}}
+ARG VENV_PATH=$HOME/.venv
+RUN mkdir -p "$HOME" \
+    && python3 -m venv "$VENV_PATH" \
+    && "$VENV_PATH/bin/pip" install --no-cache-dir .
+
+
+# --- Runtime stage ---
+FROM python:3.14-slim-trixie AS runtime
+
+ARG USERNAME={{cookiecutter.package_name}}
 ARG HOME=/home/$USERNAME
 ARG VENV_PATH=$HOME/.venv
 
-# Update and upgrade.
-RUN apt update && apt install -y git
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_NO_INPUT=1
 
-# Create a new user and group called 'user'
-RUN groupadd -r $USERNAME && useradd -r -g $USERNAME -m -d $HOME $USERNAME
+RUN groupadd -r "$USERNAME" \
+    && useradd -r -g "$USERNAME" -m -d "$HOME" "$USERNAME"
 
-# Set the working directory to the app location and change ownership
-WORKDIR $HOME/{{cookiecutter.project_name}}
-RUN chown -R $USERNAME:$USERNAME $HOME/{{cookiecutter.project_name}}
+WORKDIR "$HOME/{{cookiecutter.package_name}}"
+RUN chown -R "$USERNAME":"$USERNAME" "$HOME"
 
-# Switch to the new user
-USER $USERNAME
+USER "$USERNAME"
 
-# Set up a virtual environment and activate it
-RUN python3 -m venv $VENV_PATH
 ENV PATH="$VENV_PATH/bin:$PATH"
 
-# Copy the application code and install dependencies
-COPY --chown=$USERNAME:$USERNAME .. .
-RUN pip install -e .
+# Installed application and its dependencies
+COPY --from=builder --chown="$USERNAME":"$USERNAME" "$VENV_PATH" "$VENV_PATH"
+
+# Project source (fixtures, migrations, etc.) matching the dev layout
+COPY --chown="$USERNAME":"$USERNAME" . .
+
+EXPOSE 8000
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+    CMD ["python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/ping/', timeout=5)"]
+
+CMD ["uvicorn", "{{cookiecutter.package_name}}.asgi:application", "--host", "0.0.0.0", "--port", "8000", "--workers", "4", "--log-level", "info"]

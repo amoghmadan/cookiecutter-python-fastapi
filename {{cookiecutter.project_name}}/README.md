@@ -17,7 +17,7 @@ uv sync --dev
 ## How to run a development server?
 
 ```bash
-{{cookiecutter.package_name}} runserver
+python -m {{cookiecutter.package_name}} runserver
 ```
 
 ## Migrations

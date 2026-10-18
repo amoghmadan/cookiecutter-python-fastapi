@@ -1,19 +1,31 @@
-from sqlalchemy import Column, Integer, MetaData, Table
+from sqlalchemy import BigInteger, Column, Integer, MetaData, Table
 from sqlmodel import Field
 
-from {{cookiecutter.package_name}}.db.models import Model
+from {{cookiecutter.package_name}}.db.models.base import Model
 
 
 class Article(Model, table=True):  # type: ignore[call-arg]
     """Concrete model with a single-column primary key."""
 
-    title: str = Field(index=True)
-    summary: str | None = None
+    id: int | None = Field(
+        default=None,
+        sa_column=Column(
+            BigInteger(), primary_key=True, autoincrement=True, nullable=False
+        ),
+    )
+    title: str = Field(index=True, default="t")
+    summary: str | None = Field(default=None)
 
 
 class Composite(Model):
     """Non-table model whose ``__table__`` is substituted for pk tests."""
 
+    id: int | None = Field(
+        default=None,
+        sa_column=Column(
+            BigInteger(), primary_key=True, autoincrement=True, nullable=False
+        ),
+    )
     code: int
 
 

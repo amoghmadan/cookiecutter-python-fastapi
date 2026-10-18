@@ -1,14 +1,31 @@
+from types import AsyncGeneratorType
+from typing import Annotated
+
 from fastapi import Depends, Request
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
+
+from {{cookiecutter.package_name}}.db import DEFAULT_DB_ALIAS
 
 
-def get_db(request: Request) -> AsyncSession:
-    """
-    Use "fastapi.Depends" class and pass this function to access DB object.
-    :param request: Request
-    :return: AsyncSession
-    """
-    return request.state.db
+class GetDB:
+    """Get: DB"""
+
+    def __init__(self, alias: str = DEFAULT_DB_ALIAS) -> None:
+        self.alias = alias
+
+    async def __call__(
+        self, request: Request
+    ) -> AsyncGeneratorType[AsyncSession, None]:
+        """
+        Use "fastapi.Depends" class and pass this function to access DB object.
+        :param request: Request
+        :return: AsyncSession
+        """
+        session_class: async_sessionmaker[AsyncSession] = request.app.state.sessions[
+            self.alias
+        ]
+        async with session_class() as session:
+            yield session
 
 
-DBSes: AsyncSession = Depends(get_db)
+DBSes = Annotated[AsyncSession, Depends(GetDB())]

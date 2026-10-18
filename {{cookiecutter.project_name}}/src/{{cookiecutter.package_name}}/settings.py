@@ -3,6 +3,7 @@ Settings for {{cookiecutter.package_name}} project.
 """
 
 import os
+from http import HTTPMethod
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -38,15 +39,15 @@ USE_TZ = True
 
 # OpenAPI settings
 OPENAPI = {
-    "title": "{{cookiecutter.package_name}} Title",
-    "summary": "{{cookiecutter.package_name}} Summary.",
-    "description": "{{cookiecutter.package_name}} as a base for new projects.",
+    "title": "{{cookiecutter.project_name}}",
+    "summary": "{{cookiecutter.package_name}}",
+    "description": "{{cookiecutter.project_description}}",
     "version": __version__,
     "openapi_url": "/schema/" if DEBUG else None,
     "docs_url": "/schema/swagger/" if DEBUG else None,
     "redoc_url": "/schema/redoc/" if DEBUG else None,
     "license": {
-        "name": "MIT",
+        "name": "Other/Proprietary License",
     },
 }
 
@@ -83,3 +84,18 @@ LOGGING = {
         },
     },
 }
+
+# CORS settings
+CORS_ALLOW_ORIGINS: list[str] = os.environ.get(
+    "CORS_ALLOW_ORIGINS", "http://localhost:8000"
+).split(",")
+CORS_ALLOW_CREDENTIALS: bool = True
+CORS_ALLOW_METHODS: list[str] = [m for m in HTTPMethod]
+CORS_ALLOW_HEADERS: list[str] = [
+    "accept",
+    "authorization",
+    "content-type",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]

@@ -14,8 +14,8 @@ classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: Web Environment",
     "Framework :: FastAPI",
-    "Framework :: FastAPI :: 0.141.1",
-    "License :: OSI Approved :: MIT License",
+    "Framework :: FastAPI :: 0.144.0",
+    "License :: Other/Proprietary License",
     "Natural Language :: English",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
@@ -29,11 +29,11 @@ classifiers = [
 dependencies = [
     "aiosqlite>=0.22.1",
     "alembic>=1.20.0",
-    "fastapi[standard-no-fastapi-cloud-cli]>=0.141.1",
+    "fastapi[standard-no-fastapi-cloud-cli]>=0.144.0",
     "greenlet>=3.5.6",
-    "sqlmodel>=0.0.42",
-    "tzdata>=2026.4",
-    "uvicorn>=0.53.0",
+    "sqlmodel>=0.0.48",
+    "tzdata>=2026.5",
+    "uvicorn>=0.54.0",
 ]
 
 [dependency-groups]
@@ -41,8 +41,8 @@ dev = [
     "bandit[toml]>=1.9.4",
     "pytest>=9.1.1",
     "pytest-cov>=7.1.0",
-    "ruff>=0.16.7",
-    "ty>=0.0.81",
+    "ruff>=0.17.1",
+    "ty>=0.0.89",
 ]
 
 [project.scripts]
@@ -66,7 +66,7 @@ omit = ["test/*", ".venv/*", "venv/*", "__version__.py"]
 
 [tool.pytest]
 minversion = "9.0"
-addopts = ["-ra", "-q"]
+addopts = ["-ra", "-q", "--cov=src", "--cov-fail-under=80"]
 testpaths = ["test"]
 asyncio_mode = "auto"
 

@@ -1,4 +1,4 @@
-from sqlmodel import BigInteger, Column, Field, SQLModel
+from sqlmodel import SQLModel
 
 
 class Model(SQLModel):
@@ -7,12 +7,12 @@ class Model(SQLModel):
     __abstract__ = True
     __table__ = None
 
-    id: int | None = Field(
-        default=None,
-        sa_column=Column(
-            BigInteger(), primary_key=True, autoincrement=True, nullable=False
-        ),
-    )
+    # id: int | None = Field(
+    #     default=None,
+    #     sa_column=Column(
+    #         BigInteger(), primary_key=True, autoincrement=True, nullable=False
+    #     ),
+    # )
 
     @property
     def pk(self) -> None | int | str | tuple:

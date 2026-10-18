@@ -2,6 +2,7 @@ import asyncio
 from http import HTTPStatus
 from unittest.mock import AsyncMock, MagicMock
 
+from {{cookiecutter.package_name}}.__version__ import __version__
 from {{cookiecutter.package_name}}.schemas.response import Pong
 from {{cookiecutter.package_name}}.views import pong
 
@@ -20,11 +21,11 @@ def test_pong_view_with_mock_db():
     result.scalar_one.assert_called_once_with()
 
 
-def test_ping_endpoint_returns_pong(client):
+def test_ping_endpoint_returns_version(client):
     response = client.get("/api/v1/ping/")
 
     assert response.status_code == 200
-    assert response.json() == {"reply": "Pong"}
+    assert response.json() == {"reply": __version__}
 
 
 def test_ping_endpoint_rejects_post(client):

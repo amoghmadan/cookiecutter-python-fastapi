@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class Pong(BaseModel):
+class PingResponse(BaseModel):
     """Reply: Pong"""
 
     reply: str

@@ -46,7 +46,7 @@ OPENAPI = {
     "openapi_url": "/schema/" if DEBUG else None,
     "docs_url": "/schema/swagger/" if DEBUG else None,
     "redoc_url": "/schema/redoc/" if DEBUG else None,
-    "license": {
+    "license_info": {
         "name": "Other/Proprietary License",
     },
 }

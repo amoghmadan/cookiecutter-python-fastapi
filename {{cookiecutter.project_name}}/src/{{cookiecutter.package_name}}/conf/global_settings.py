@@ -28,7 +28,7 @@ OPENAPI = {
     "openapi_url": "/schema/",
     "docs_url": "/schema/swagger/",
     "redoc_url": "/schema/redoc/",
-    "license": {
+    "license_info": {
         "name": "Other/Proprietary License",
     },
 }

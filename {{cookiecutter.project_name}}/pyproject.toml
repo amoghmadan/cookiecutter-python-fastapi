@@ -14,7 +14,7 @@ classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: Web Environment",
     "Framework :: FastAPI",
-    "Framework :: FastAPI :: 0.158.0",
+    "Framework :: FastAPI :: 0.159.1",
     "License :: Other/Proprietary License",
     "Natural Language :: English",
     "Operating System :: OS Independent",
@@ -28,8 +28,8 @@ classifiers = [
 ]
 dependencies = [
     "aiosqlite>=0.22.1",
-    "alembic>=1.20.0",
-    "fastapi[standard-no-fastapi-cloud-cli]>=0.158.0",
+    "alembic>=1.20.1",
+    "fastapi[standard-no-fastapi-cloud-cli]>=0.159.1",
     "greenlet>=3.5.6",
     "sqlmodel>=0.0.48",
     "tzdata>=2026.5",

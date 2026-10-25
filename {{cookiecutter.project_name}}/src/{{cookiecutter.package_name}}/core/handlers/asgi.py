@@ -14,12 +14,10 @@ class ASGIHandler:
 
     def __new__(cls: type) -> FastAPI:
         openapi: dict[str, Any] = {**settings.OPENAPI}
-        license_info = openapi.pop("license", None)
 
         application: FastAPI = FastAPI(
             debug=settings.DEBUG,
             lifespan=lifespan,
-            license_info=license_info,
             **openapi,
         )
         for protocol in middlewares:  # Register middlewares

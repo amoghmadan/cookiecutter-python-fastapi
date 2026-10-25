@@ -6,8 +6,7 @@ import pytest
 
 from {{cookiecutter.package_name}}.__version__ import __version__
 from {{cookiecutter.package_name}}.core.exceptions import Error
-from {{cookiecutter.package_name}}.schemas.request import PingRequest
-from {{cookiecutter.package_name}}.schemas.response import PingResponse
+from {{cookiecutter.package_name}}.schemas.domain import PingRequest, PingResponse
 from {{cookiecutter.package_name}}.views import pong
 
 
@@ -20,6 +19,9 @@ def test_pong_view_with_mock_db():
 
     response = asyncio.run(pong(PingRequest(), db))
 
+    statement, params = db.execute.await_args.args
+    assert str(statement) == "SELECT CAST(:version AS TEXT) AS pong;"
+    assert params == {"version": __version__}
     assert response == PingResponse(reply="Pong")
     db.execute.assert_awaited_once()
     result.scalar_one.assert_called_once_with()

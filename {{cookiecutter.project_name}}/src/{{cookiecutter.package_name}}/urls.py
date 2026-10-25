@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from {{cookiecutter.package_name}}.urls.api import api
+from {{cookiecutter.package_name}}.api import api
 
 urlpatterns: list[APIRouter] = [api]
 

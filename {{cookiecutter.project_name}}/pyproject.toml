@@ -14,7 +14,7 @@ classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: Web Environment",
     "Framework :: FastAPI",
-    "Framework :: FastAPI :: 0.159.1",
+    "Framework :: FastAPI :: 0.162.0",
     "License :: Other/Proprietary License",
     "Natural Language :: English",
     "Operating System :: OS Independent",
@@ -29,7 +29,7 @@ classifiers = [
 dependencies = [
     "aiosqlite>=0.22.1",
     "alembic>=1.20.1",
-    "fastapi[standard-no-fastapi-cloud-cli]>=0.159.1",
+    "fastapi[standard-no-fastapi-cloud-cli]>=0.162.0",
     "greenlet>=3.5.6",
     "sqlmodel>=0.0.48",
     "tzdata>=2026.5",
@@ -41,8 +41,8 @@ dev = [
     "bandit[toml]>=1.9.4",
     "pytest>=9.1.1",
     "pytest-cov>=7.1.0",
-    "ruff>=0.17.1",
-    "ty>=0.0.90",
+    "ruff>=0.17.2",
+    "ty>=0.0.91",
 ]
 
 [project.scripts]

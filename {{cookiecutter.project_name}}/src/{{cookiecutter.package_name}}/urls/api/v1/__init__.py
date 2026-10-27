@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from {{cookiecutter.package_name}}.api.v1.ping import ping
+from {{cookiecutter.package_name}}.urls.api.v1.ping import ping
 
 urlpatterns: list[APIRouter] = [ping]
 

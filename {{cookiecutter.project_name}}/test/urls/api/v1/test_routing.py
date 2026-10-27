@@ -1,6 +1,6 @@
 from fastapi.routing import APIRoute
 
-from {{cookiecutter.package_name}}.api.v1.ping import ping
+from {{cookiecutter.package_name}}.urls.api.v1.ping import ping
 from {{cookiecutter.package_name}}.views import pong
 
 
